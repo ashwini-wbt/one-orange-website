@@ -5,22 +5,49 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Moves half the width (since we duplicate logos) */
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.animate-marquee {
+  display: flex;
+  width: fit-content;
+  animation: scroll 20s linear infinite; /* 20s speed, adjust as needed */
+}
+
+/* Pause animation on hover if you want */
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@theme {
+  /* Brand Colors */
+  --color-brand-orange: #FF6900;
+  --color-brand-dark: #1A1A1A;
+
+  /* FONT CONFIGURATION - Important Part */
+  /* Ye names exact wahi hone chahiye jo Google Fonts link mein hain */
+  --font-heading: "Taviraj", serif;  
+  --font-body: "Fustat", sans-serif;
+  --font-logo: "Poppins", sans-serif;
+  
+  /* Defaults */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Default font Fustat set kar rahe hain */
+  font-family: var(--font-body), sans-serif; 
+  /* Font smoothing ke liye */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
