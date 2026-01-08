@@ -22,14 +22,14 @@ const TESTIMONIALS = [
   },
   {
     id: 3,
-    brand: "MOXIE",
+    brand: "MOXIE BEAUTY",
     name: "Nikita",
     quote: "Scaled this hair care brand from 0 to 3cr/month within a span of 14 months",
     videoSrc: "/videos/Moxie Testimonial.mp4", 
   },
   {
     id: 4,
-    brand: "Pilgrim",
+    brand: "VEDIC VALLEY",
     name: "Kanikka",
     quote: "Achieved 5x ROAS within the first quarter of engagement",
     videoSrc: "/videos/Kanikka Testimonial.mp4", 
@@ -43,7 +43,7 @@ const TESTIMONIALS = [
   },
   {
     id: 6,
-    brand: "BlissClub",
+    brand: "BLUE TEA",
     name: "Nitesh",
     quote: "Exceptional growth in a crowded market.",
     videoSrc: "/videos/Nitesh Testimonial.mp4", 
@@ -53,11 +53,10 @@ const TESTIMONIALS = [
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(2);
   const [isMuted, setIsMuted] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
   
-  // === 1. VISIBILITY STATE (New) ===
+  // === 1. VISIBILITY STATE ===
   const [isInView, setIsInView] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null); // Ref for the whole section
+  const sectionRef = useRef<HTMLElement>(null);
 
   // Drag Refs
   const dragStartX = useRef<number | null>(null);
@@ -67,16 +66,13 @@ export default function Testimonials() {
   // Video Refs
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  // === 2. INTERSECTION OBSERVER (Detect Scroll) ===
+  // === 2. INTERSECTION OBSERVER ===
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // entry.isIntersecting true tab hota hai jab element screen pe aata hai
         setIsInView(entry.isIntersecting);
       },
-      {
-        threshold: 0.4, // Jab 40% section screen pe dikhega tabhi play hoga
-      }
+      { threshold: 0.4 }
     );
 
     if (sectionRef.current) {
@@ -88,24 +84,15 @@ export default function Testimonials() {
     };
   }, []);
 
-  // === 3. AUTO-SCROLL (Only if visible) ===
-  useEffect(() => {
-    // Agar paused hai, drag kar raha hai, ya screen pe NAHI hai, toh scroll mat karo
-    if (isPaused || isDragging.current || !isInView) return; 
-    const interval = setInterval(() => {
-      handleNext();
-    }, 4000); 
-    return () => clearInterval(interval);
-  }, [activeIndex, isPaused, isInView]);
+  // === 3. AUTO-SCROLL LOGIC (REMOVED INTERVAL) ===
+  // Humne setInterval hata diya hai. Ab scroll tabhi hoga jab video ka 'onEnded' event fire hoga.
 
   // === 4. SMART VIDEO CONTROL ===
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
 
-      // Play tabhi hoga jab: 
-      // 1. Video Active (Center) ho 
-      // 2. Section Screen pe Visible ho (isInView === true)
+      // Play logic: Active Index + Visible on Screen
       if (index === activeIndex && isInView) {
         video.muted = isMuted;
         const playPromise = video.play();
@@ -113,13 +100,12 @@ export default function Testimonials() {
           playPromise.catch(() => {});
         }
       } else {
-        // Agar center me nahi hai YA screen se bahar hai -> PAUSE
+        // Pause others
         video.pause();
-        // Reset only if it's not the active one (optional)
         if (index !== activeIndex) video.currentTime = 0;
       }
     });
-  }, [activeIndex, isMuted, isInView]); // Added isInView dependency
+  }, [activeIndex, isMuted, isInView]);
 
   const getIndex = (index: number) => {
     const len = TESTIMONIALS.length;
@@ -138,7 +124,6 @@ export default function Testimonials() {
   const minSwipeDistance = 40;
 
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
-    setIsPaused(true);
     isDragging.current = true;
     if ('touches' in e) dragStartX.current = e.touches[0].clientX;
     else dragStartX.current = (e as React.MouseEvent).clientX;
@@ -151,7 +136,6 @@ export default function Testimonials() {
   };
 
   const handleDragEnd = () => {
-    setIsPaused(false);
     isDragging.current = false;
     if (dragStartX.current === null || dragEndX.current === null) return;
     
@@ -170,7 +154,7 @@ export default function Testimonials() {
 
   return (
     <section 
-      ref={sectionRef} // Attached Ref here to detect visibility
+      ref={sectionRef} 
       className="py-20 md:py-32 bg-white w-full overflow-hidden select-none"
     >
       <Container>
@@ -184,8 +168,8 @@ export default function Testimonials() {
       {/* TRACK CONTAINER */}
       <div 
         className="relative w-full h-[650px] flex items-center justify-center cursor-grab active:cursor-grabbing"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => { setIsPaused(false); handleDragEnd(); }}
+        // Mouse Leave par drag end kar rahe hain taaki stuck na ho
+        onMouseLeave={() => { handleDragEnd(); }}
         
         onMouseDown={handleDragStart}
         onMouseMove={handleDragMove}
@@ -195,19 +179,21 @@ export default function Testimonials() {
         onTouchEnd={handleDragEnd}
       >
         
-        {/* Buttons */}
+        {/* Buttons (Fixed: Visible on Mobile now) */}
+        {/* Added: left-2 / right-2 for mobile, left-10/right-10 for desktop */}
+        {/* Added: w-10 h-10 for mobile, w-16 h-16 for desktop */}
         <button 
           onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-          className="absolute left-4 md:left-10 z-50 w-12 h-12 md:w-16 md:h-16 bg-white shadow-xl rounded-full flex items-center justify-center hover:scale-110 transition-transform border border-gray-100 cursor-pointer hidden md:flex"
+          className="absolute left-2 md:left-10 z-50 w-10 h-10 md:w-16 md:h-16 bg-white shadow-xl rounded-full flex items-center justify-center hover:scale-110 transition-transform border border-gray-100 cursor-pointer"
         >
-          <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 text-gray-700" />
+          <ChevronLeft className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />
         </button>
 
         <button 
           onClick={(e) => { e.stopPropagation(); handleNext(); }}
-          className="absolute right-4 md:right-10 z-50 w-12 h-12 md:w-16 md:h-16 bg-white shadow-xl rounded-full flex items-center justify-center hover:scale-110 transition-transform border border-gray-100 cursor-pointer hidden md:flex"
+          className="absolute right-2 md:right-10 z-50 w-10 h-10 md:w-16 md:h-16 bg-white shadow-xl rounded-full flex items-center justify-center hover:scale-110 transition-transform border border-gray-100 cursor-pointer"
         >
-          <ChevronRight className="w-6 h-6 md:w-8 md:h-8 text-gray-700" />
+          <ChevronRight className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />
         </button>
 
         {/* CARDS WRAPPER */}
@@ -249,10 +235,10 @@ export default function Testimonials() {
                   transition: `transform ${transitionDuration} cubic-bezier(0.25, 1, 0.5, 1), opacity ${transitionDuration} ease`,
                 }}
                 onClick={(e) => {
-                   if (!isActive && isVisible && !isDragging.current) {
-                     e.stopPropagation();
-                     setActiveIndex(index);
-                   }
+                    if (!isActive && isVisible && !isDragging.current) {
+                      e.stopPropagation();
+                      setActiveIndex(index);
+                    }
                 }}
               >
                 {/* 1. Brand Logo */}
@@ -270,9 +256,12 @@ export default function Testimonials() {
                         src={item.videoSrc}
                         className="absolute inset-0 w-full h-full object-cover"
                         playsInline
-                        loop
-                        muted={true}
+                        // loop hataya taaki 'onEnded' trigger ho sake
+                        // loop={false} 
+                        muted={true} // Controlled by Effect
                         style={{ pointerEvents: 'none' }} 
+                        // Jab video khatam hoga, tabhi next slide aayegi
+                        onEnded={handleNext} 
                      />
                    )}
                    

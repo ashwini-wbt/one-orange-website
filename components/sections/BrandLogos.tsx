@@ -1,3 +1,6 @@
+"use client"; // Client component zaroori hai state ke liye
+
+import { useState } from "react";
 import Image from "next/image";
 
 // === IMPORTS ===
@@ -18,7 +21,7 @@ import Lelogo from "../images/lelogo.svg";
 // === DATA ===
 const LOGO_DATA = [
   { name: "BLUE TEA", logo: BlueTeaLogo, color: "bg-white" },
-  { name: "MOXIE", logo: MoxieLogo, color: "bg-[#DFFF00]" }, // Yellow Tile
+  { name: "MOXIE", logo: MoxieLogo, color: "bg-[#DFFF00]" }, 
   { name: "Perfora", logo: PerforaLogo, color: "bg-white" },
   { name: "Ruby's", logo: RubysLogo, color: "bg-white" },
   { name: "Pangolin", logo: LovePangolinLogo, color: "bg-white" },
@@ -36,6 +39,9 @@ const LOGO_DATA = [
 const BRANDS = [...LOGO_DATA, ...LOGO_DATA, ...LOGO_DATA];
 
 export default function BrandLogos() {
+  // State to control animation
+  const [isPaused, setIsPaused] = useState(false);
+
   return (
     <section className="w-full py-16 overflow-hidden bg-white">
       {/* Background container */}
@@ -45,15 +51,23 @@ export default function BrandLogos() {
         <div className="overflow-hidden w-full relative">
           
           {/* Moving Track */}
-          <div className="animate-marquee flex items-center">
+          <div 
+            className="animate-marquee flex items-center"
+            // === FIX FOR MOBILE ===
+            // Hum CSS hover ki jagah inline style se control kar rahe hain
+            style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
+            
+            // Desktop Events
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            
+            // Mobile Events (Touch start = pause, Touch end = run)
+            onTouchStart={() => setIsPaused(true)}
+            onTouchEnd={() => setIsPaused(false)}
+          >
             {BRANDS.map((brand, i) => (
               <div 
                 key={i} 
-                // === FIXED TILE STYLING ===
-                // Width/Height: Fixed 128px (w-32) for consistency
-                // Margin: mx-4 creates the gap between tiles
-                // Padding: p-6 ensures the logo has space inside (doesn't touch edges)
-                // Rounded: rounded-2xl matches the soft look in screenshot
                 className={`
                   w-28 h-28 md:w-32 md:h-32 
                   shrink-0 flex items-center justify-center 
@@ -68,8 +82,7 @@ export default function BrandLogos() {
                     <Image 
                         src={brand.logo} 
                         alt={brand.name}
-                        // object-contain: Ensures logo fits inside without stretching/cutting
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain pointer-events-none" // pointer-events-none helps drag scrolling
                     />
                 </div>
               </div>
@@ -78,7 +91,7 @@ export default function BrandLogos() {
 
         </div>
 
-        {/* Fade Gradients (Optional: Makes edges look smooth) */}
+        {/* Fade Gradients */}
         <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white/20 to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white/20 to-transparent z-10 pointer-events-none" />
       
