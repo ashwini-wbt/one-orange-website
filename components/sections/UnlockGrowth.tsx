@@ -10,9 +10,17 @@ export default function UnlockGrowth() {
           Let’s unlock faster, higher, repeat purchases
         </h2>
         
-        <Button className="px-10 py-4 text-lg shadow-xl shadow-orange-200/50">
-          Book a call
-        </Button>
+        {/* Link added here */}
+        <a 
+          href="https://calendly.com/kansal-nitin/strategy-call-with-nitin" 
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          <Button className="px-10 py-4 text-lg shadow-xl shadow-orange-200/50">
+            Book a call
+          </Button>
+        </a>
+
       </Container>
     </section>
   );
