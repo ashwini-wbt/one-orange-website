@@ -2,7 +2,6 @@ import Container from "../ui/Container";
 
 export default function Hero() {
   return (
-    // Padding top adjust kiya taaki header ke niche sahi space aaye
     <section className="relative pt-36 pb-20 md:pt-52 md:pb-32 overflow-hidden">
       
       {/* Background Blur Effect */}
@@ -10,7 +9,7 @@ export default function Hero() {
 
       <Container className="text-center relative z-10">
         
-        {/* New Headline */}
+        {/* Headline */}
         <h1 className="max-w-7xl mx-auto font-heading font-normal text-gray-900 leading-[0.95] tracking-tight">
           <span className="block text-[clamp(3.5rem,9vw,7.5rem)]">
             We help D2C brands
@@ -20,9 +19,14 @@ export default function Hero() {
           </span>
         </h1>
         
-        {/* New Subtext */}
-        <p className="mt-10 md:mt-14 font-body text-lg md:text-2xl lg:text-[28px] font-medium text-gray-700 tracking-tight max-w-3xl mx-auto">
-          Scaled 100+ D2C brands • Generated ₹500Cr + revenue
+        {/* Subtext - Mobile: 2 Lines, Desktop: 1 Line */}
+        <p className="mt-10 md:mt-14 font-body text-lg md:text-2xl lg:text-[28px] font-medium text-gray-700 tracking-tight max-w-3xl mx-auto leading-relaxed md:leading-normal">
+          Scaled 100+ D2C brands 
+          {/* Mobile mein Bullet hide hoga, Desktop pe dikhega */}
+          <span className="hidden md:inline mx-3">•</span>
+          {/* Mobile mein Break aayega, Desktop pe nahi */}
+          <br className="block md:hidden" />
+          Generated ₹500Cr + revenue
         </p>
 
       </Container>
