@@ -43,12 +43,18 @@ const ServiceCard = ({ title, icon: Icon, desc }: { title: string; icon: any; de
     
     bg-[#EDEDFF] 
     rounded-[16px] 
-    transition-all duration-300 hover:scale-[1.02] cursor-pointer
+    
+    /* Active class added for better Mobile Touch response */
+    transition-all duration-300 active:scale-95 hover:scale-[1.02] cursor-pointer
     shadow-[0px_4px_4px_rgba(0,0,0,0.25)]
   ">
     
-    {/* === ICON (ALWAYS VISIBLE) === */}
-    <div className="absolute top-4 left-4 md:top-8 md:left-8 transition-transform duration-300 group-hover:scale-90 origin-top-left">
+    {/* === ICON === */}
+    <div className="
+        absolute top-4 left-4 md:top-8 md:left-8 
+        transition-transform duration-300 
+        group-hover:scale-90 origin-top-left
+    ">
       <div className="w-8 h-8 md:w-12 md:h-12 flex items-center justify-start">
         <Icon className="w-6 h-6 md:w-8 md:h-8 text-gray-900 stroke-1" />
       </div>
@@ -57,24 +63,31 @@ const ServiceCard = ({ title, icon: Icon, desc }: { title: string; icon: any; de
     {/* === CONTENT WRAPPER === */}
     <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8 flex flex-col justify-end">
       
-      {/* TITLE (Moves up slightly on Hover to make room) */}
+      {/* TITLE */}
       <h3 className="
         font-body font-normal text-sm md:text-2xl text-gray-900 leading-tight 
-        transition-transform duration-300 
+        transition-transform duration-300 origin-bottom-left
+        
+        /* Base State (Mobile & Desktop): Normal Position */
+        translate-y-0
+        
+        /* Hover State (Mobile & Desktop): Moves Up */
         group-hover:-translate-y-8 md:group-hover:-translate-y-6 
-        origin-bottom-left
       ">
         {title}
       </h3>
 
-      {/* DESCRIPTION (Fades in & Slides up) */}
+      {/* DESCRIPTION */}
       <p className="
         absolute top-full left-0 w-full 
         text-[10px] md:text-sm text-gray-600 leading-tight font-medium
-        opacity-0 
-        /* Animation: Slide up into position */
-        group-hover:opacity-100 group-hover:-translate-y-7 md:group-hover:-translate-y-5
         transition-all duration-300 delay-75
+        
+        /* Base State (Mobile & Desktop): Hidden & Pushed Down */
+        opacity-0 translate-y-4
+
+        /* Hover State (Mobile & Desktop): Visible & Moves Up */
+        group-hover:opacity-100 group-hover:-translate-y-7 md:group-hover:-translate-y-5
       ">
         {desc}
       </p>
