@@ -33,8 +33,11 @@ const SERVICE_DATA = [
 ];
 
 const ServiceCard = ({ title, icon: Icon, desc }: { title: string; icon: any; desc: string }) => (
-  <div className="
-    group relative overflow-hidden
+  <div 
+    // IMPORTANT: tabIndex={0} makes this element focusable on Mobile (enables Tap behavior)
+    tabIndex={0} 
+    className="
+    group relative overflow-hidden focus:outline-none
     /* Mobile: Width 48%, Height 160px, Padding p-4 */
     w-[48%] h-[160px] p-4 
     
@@ -44,8 +47,9 @@ const ServiceCard = ({ title, icon: Icon, desc }: { title: string; icon: any; de
     bg-[#EDEDFF] 
     rounded-[16px] 
     
-    /* Active class added for better Mobile Touch response */
-    transition-all duration-300 active:scale-95 hover:scale-[1.02] cursor-pointer
+    /* Animation classes */
+    transition-all duration-300 
+    hover:scale-[1.02] active:scale-95 cursor-pointer
     shadow-[0px_4px_4px_rgba(0,0,0,0.25)]
   ">
     
@@ -53,7 +57,8 @@ const ServiceCard = ({ title, icon: Icon, desc }: { title: string; icon: any; de
     <div className="
         absolute top-4 left-4 md:top-8 md:left-8 
         transition-transform duration-300 
-        group-hover:scale-90 origin-top-left
+        group-hover:scale-90 group-focus:scale-90 group-active:scale-90
+        origin-top-left
     ">
       <div className="w-8 h-8 md:w-12 md:h-12 flex items-center justify-start">
         <Icon className="w-6 h-6 md:w-8 md:h-8 text-gray-900 stroke-1" />
@@ -68,11 +73,12 @@ const ServiceCard = ({ title, icon: Icon, desc }: { title: string; icon: any; de
         font-body font-normal text-sm md:text-2xl text-gray-900 leading-tight 
         transition-transform duration-300 origin-bottom-left
         
-        /* Base State (Mobile & Desktop): Normal Position */
+        /* Base Position */
         translate-y-0
         
-        /* Hover State (Mobile & Desktop): Moves Up */
-        group-hover:-translate-y-8 md:group-hover:-translate-y-6 
+        /* Move Up on Hover (Desktop) OR Focus/Active (Mobile) */
+        group-hover:-translate-y-10 group-focus:-translate-y-10 group-active:-translate-y-10
+        md:group-hover:-translate-y-6 md:group-focus:-translate-y-6
       ">
         {title}
       </h3>
@@ -83,11 +89,12 @@ const ServiceCard = ({ title, icon: Icon, desc }: { title: string; icon: any; de
         text-[10px] md:text-sm text-gray-600 leading-tight font-medium
         transition-all duration-300 delay-75
         
-        /* Base State (Mobile & Desktop): Hidden & Pushed Down */
+        /* Base State: Hidden */
         opacity-0 translate-y-4
 
-        /* Hover State (Mobile & Desktop): Visible & Moves Up */
-        group-hover:opacity-100 group-hover:-translate-y-7 md:group-hover:-translate-y-5
+        /* Show on Hover (Desktop) OR Focus/Active (Mobile) */
+        group-hover:opacity-100 group-hover:-translate-y-9 group-focus:opacity-100 group-focus:-translate-y-9 group-active:opacity-100 group-active:-translate-y-9
+        md:group-hover:-translate-y-5 md:group-focus:-translate-y-5
       ">
         {desc}
       </p>
