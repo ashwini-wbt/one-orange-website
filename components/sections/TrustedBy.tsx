@@ -1,44 +1,43 @@
 import Image from "next/image";
 import Container from "../ui/Container";
 
-// === STEP 1: Import your SVGs/PNGs here ===
-import RubysLogo from "../images/rubys.svg";
-import PerforaLogo from "../images/perfora.svg";
-import MoxieLogo from "../images/moxie.svg";
-import CoralSkyLogo from "../images/Coral_and_Sky_logo-removebg-preview 1.svg";
-import LovePangolinLogo from "../images/lovepangolin.svg";
-import BallerLogo from "../images/baller.png";
-import MintreeLogo from "../images/minl.svg";
-import BlueTeaLogo from "../images/bluetea.svg";
-import BubblesLogo from "../images/bubbles.svg";
-import HerringboneLogo from "../images/harringbone.svg";
-import EarthRagaLogo from "../images/earthraga.svg";
-import SassyThingLogo from "../images/sassy.svg";
-import lelogo from "../images/lelogo.svg";
 
-// === NEW LOGOS ADDED ===
-import BenLogo from "../images/BEN.png";
-import UrbanGharLogo from "../images/urbanGhar.png";
+import ArtAndCheeseLogo from "../images/logos/ArtandCheese.png";
+import BallerLogo from "../images/logos/Baller.webp";
+import BlackSheepLogo from "../images/logos/BlackSheep.png";
+import BlueTeaLogo from "../images/logos/BlueTea.webp";
+import BubblesLogo from "../images/logos/Bubbles.png";
+import CoralLogo from "../images/logos/Coral.webp";
+import DaUrbanLogo from "../images/logos/DaUrban.png";
+import HerringboneLogo from "../images/logos/Herringbone.png";
+import LisenLogo from "../images/logos/Lisen.jpeg";
+import LovePangolinLogo from "../images/logos/Lovepangolin.png";
+import MintreeLogo from "../images/logos/Mintree.svg";
+import MoxieBeautyLogo from "../images/logos/MoxieBeauty.png";
+import PerforaLogo from "../images/logos/Perfora.png";
+import RubysLogo from "../images/logos/rubys.svg"; 
+import SassyLogo from "../images/logos/Sassy.png";
 
-// === STEP 2: Map the imports to the array ===
+
 const BRANDS = [
-  { name: "MOXIE", logo: MoxieLogo },
-  { name: "Perfora", logo: PerforaLogo },
-  { name: "BLUE TEA", logo: BlueTeaLogo },
   { name: "Ruby's Organics", logo: RubysLogo },
+  { name: "Perfora", logo: PerforaLogo },
+  { name: "Blue Tea", logo: BlueTeaLogo },
+  { name: "Moxie Beauty", logo: MoxieBeautyLogo },
   { name: "Love Pangolin", logo: LovePangolinLogo },
-  { name: "BALLER ATHLETIK", logo: BallerLogo },
-  { name: "THAT SASSY THING", logo: SassyThingLogo },
+  { name: "Baller Athletik", logo: BallerLogo },
+  { name: "That Sassy Thing", logo: SassyLogo },
+  { name: "Da Urban", logo: DaUrbanLogo },
   { name: "Bubbles", logo: BubblesLogo },
+
   { name: "Mintree", logo: MintreeLogo },
-  { name: "HERRINGBONE & SUI", logo: HerringboneLogo },
-  { name: "EARTH RAGA", logo: EarthRagaLogo },
-  { name: "Coral & Sky", logo: CoralSkyLogo },
-  { name: "lelogo", logo: lelogo },
-  
-  // New Entries
-  { name: "BEN", logo: BenLogo },
-  { name: "Urban Ghar", logo: UrbanGharLogo },
+  { name: "Herringbone & Sui", logo: HerringboneLogo },
+  { name: "Lisen", logo: LisenLogo },
+
+  { name: "Black Sheep", logo: BlackSheepLogo },
+
+  { name: "Coral & Sky", logo: CoralLogo },
+  { name: "Art and Cheese", logo: ArtAndCheeseLogo },
 ];
 
 export default function TrustedBy() {
@@ -55,7 +54,7 @@ export default function TrustedBy() {
 
         {/* Logo Section with Borders */}
         <div className="border-t border-b border-indigo-50 py-12 md:py-16">
-          <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-10 md:gap-x-16 md:gap-y-14 max-w-6xl mx-auto px-4">
+          <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-12 md:gap-x-16 md:gap-y-16 max-w-7xl mx-auto px-4">
             {BRANDS.map((brand, index) => (
               <div
                 key={index}
@@ -65,7 +64,7 @@ export default function TrustedBy() {
                 <Image
                   src={brand.logo}
                   alt={`${brand.name} logo`}
-                  className="h-8 md:h-10 w-auto object-contain"
+                  className="h-8 md:h-12 w-auto object-contain"
                 />
               </div>
             ))}

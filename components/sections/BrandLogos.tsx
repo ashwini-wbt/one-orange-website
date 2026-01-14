@@ -1,45 +1,46 @@
-"use client"; // Client component zaroori hai state ke liye
+"use client";
 
 import { useState } from "react";
 import Image from "next/image";
 
-// === IMPORTS ===
-import RubysLogo from "../images/rubys.svg";
-import PerforaLogo from "../images/perfora.svg";
-import MoxieLogo from "../images/moxie.svg";
-import CoralSkyLogo from "../images/Coral_and_Sky_logo-removebg-preview 1.svg";
-import LovePangolinLogo from "../images/lovepangolin.svg";
-import BallerLogo from "../images/baller.png";
-import MintreeLogo from "../images/minl.svg";
-import BlueTeaLogo from "../images/bluetea.svg";
-import BubblesLogo from "../images/bubbles.svg";
-import HerringboneLogo from "../images/harringbone.svg";
-import EarthRagaLogo from "../images/earthraga.svg";
-import SassyThingLogo from "../images/sassy.svg";
-import Lelogo from "../images/lelogo.svg";
+import ArtAndCheeseLogo from "../images/logos/ArtandCheese.png";
+import BallerLogo from "../images/logos/Baller.webp";
+import BlackSheepLogo from "../images/logos/BlackSheep.png";
+import BlueTeaLogo from "../images/logos/BlueTea.webp";
+import BubblesLogo from "../images/logos/Bubbles.png";
+import CoralLogo from "../images/logos/Coral.webp";
+import DaUrbanLogo from "../images/logos/DaUrban.png";
+import HerringboneLogo from "../images/logos/Herringbone.png";
+import LisenLogo from "../images/logos/Lisen.jpeg";
+import LovePangolinLogo from "../images/logos/Lovepangolin.png";
+import MintreeLogo from "../images/logos/Mintree.svg";
+import MoxieBeautyLogo from "../images/logos/MoxieBeauty.png";
+import PerforaLogo from "../images/logos/Perfora.png";
+import RubysLogo from "../images/logos/rubys.svg"; 
+import SassyLogo from "../images/logos/Sassy.png";
 
-// === DATA ===
 const LOGO_DATA = [
-  { name: "BLUE TEA", logo: BlueTeaLogo, color: "bg-white" },
-  { name: "MOXIE", logo: MoxieLogo, color: "bg-[#DFFF00]" }, 
+  { name: "Ruby's Organics", logo: RubysLogo, color: "bg-white" },
   { name: "Perfora", logo: PerforaLogo, color: "bg-white" },
-  { name: "Ruby's", logo: RubysLogo, color: "bg-white" },
-  { name: "Pangolin", logo: LovePangolinLogo, color: "bg-white" },
-  { name: "Baller", logo: BallerLogo, color: "bg-white" },
-  { name: "Mintree", logo: MintreeLogo, color: "bg-white" },
-  { name: "Snaqary", logo: SassyThingLogo, color: "bg-white" }, 
-  { name: "Earth Raga", logo: EarthRagaLogo, color: "bg-white" },
-  { name: "Herringbone", logo: HerringboneLogo, color: "bg-white" },
-  { name: "Le Logo", logo: Lelogo, color: "bg-white" },
-  { name: "Coral & Sky", logo: CoralSkyLogo, color: "bg-white" },
+  { name: "Blue Tea", logo: BlueTeaLogo, color: "bg-white" },
+  { name: "Moxie Beauty", logo: MoxieBeautyLogo, color: "bg-white" },
+  { name: "Love Pangolin", logo: LovePangolinLogo, color: "bg-white" },
+  { name: "Baller Athletik", logo: BallerLogo, color: "bg-white" },
+  { name: "That Sassy Thing", logo: SassyLogo, color: "bg-white" },
+  { name: "Da Urban", logo: DaUrbanLogo, color: "bg-white" },
   { name: "Bubbles", logo: BubblesLogo, color: "bg-white" },
+  { name: "Mintree", logo: MintreeLogo, color: "bg-white" },
+  { name: "Herringbone & Sui", logo: HerringboneLogo, color: "bg-white" },
+  { name: "Lisen", logo: LisenLogo, color: "bg-white" },
+  { name: "Black Sheep", logo: BlackSheepLogo, color: "bg-white" },
+  { name: "Coral & Sky", logo: CoralLogo, color: "bg-white" },
+  { name: "Art and Cheese", logo: ArtAndCheeseLogo, color: "bg-white" },
 ];
 
-// Duplicate for smooth loop
+// Duplicate list 3 times for smooth infinite loop
 const BRANDS = [...LOGO_DATA, ...LOGO_DATA, ...LOGO_DATA];
 
 export default function BrandLogos() {
-  // State to control animation
   const [isPaused, setIsPaused] = useState(false);
 
   return (
@@ -53,15 +54,10 @@ export default function BrandLogos() {
           {/* Moving Track */}
           <div 
             className="animate-marquee flex items-center"
-            // === FIX FOR MOBILE ===
-            // Hum CSS hover ki jagah inline style se control kar rahe hain
+            // Animation Control (Pause on Hover/Touch)
             style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
-            
-            // Desktop Events
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
-            
-            // Mobile Events (Touch start = pause, Touch end = run)
             onTouchStart={() => setIsPaused(true)}
             onTouchEnd={() => setIsPaused(false)}
           >
@@ -82,7 +78,7 @@ export default function BrandLogos() {
                     <Image 
                         src={brand.logo} 
                         alt={brand.name}
-                        className="w-full h-full object-contain pointer-events-none" // pointer-events-none helps drag scrolling
+                        className="w-full h-full object-contain pointer-events-none" 
                     />
                 </div>
               </div>
@@ -91,7 +87,7 @@ export default function BrandLogos() {
 
         </div>
 
-        {/* Fade Gradients */}
+        {/* Fade Gradients (Edges ko smooth dikhane ke liye) */}
         <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white/20 to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white/20 to-transparent z-10 pointer-events-none" />
       
