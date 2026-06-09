@@ -19,6 +19,7 @@ import PerforaLogo from "../images/logos/Perfora.png";
 import RubysLogo from "../images/logos/rubys.svg"; 
 import SassyLogo from "../images/logos/Sassy.png";
 import HiraLogo from "../images/HIRA_Logo8.webp";
+import SoulflowerLogo from "../images/soulflower.png";
 const LOGO_DATA = [
   { name: "Ruby's Organics", logo: RubysLogo, color: "bg-white" },
   { name: "Perfora", logo: PerforaLogo, color: "bg-white" },
@@ -39,6 +40,7 @@ const LOGO_DATA = [
   { name: "Kleenest", logo: "/images/Kleenest_Logo_1.avif", color: "bg-white" },
   { name: "New Brand", logo: "/images/Logo_New_150x.avif", color: "bg-white" },
   { name: "Youglo", logo: "/images/Youglo-Primary_Colour_9a537501-2f68-42b4-aa3f-f66e7e3fd2af.avif", color: "bg-white" },
+  { name: "Soulflower", logo: SoulflowerLogo, color: "bg-white" },
 ];
 
 // Duplicate list 3 times for smooth infinite loop

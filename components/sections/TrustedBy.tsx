@@ -18,6 +18,7 @@ import PerforaLogo from "../images/logos/Perfora.png";
 import RubysLogo from "../images/logos/rubys.svg"; 
 import SassyLogo from "../images/logos/Sassy.png";
 import HiraLogo from "../images/HIRA_Logo8.webp";
+import SoulflowerLogo from "../images/soulflower.png";
 const BRANDS = [
   { name: "Ruby's Organics", logo: RubysLogo },
   { name: "Perfora", logo: PerforaLogo },
@@ -41,6 +42,7 @@ const BRANDS = [
   { name: "Kleenest", logo: "/images/Kleenest_Logo_1.avif" },
   { name: "New Brand", logo: "/images/Logo_New_150x.avif" },
   { name: "Youglo", logo: "/images/Youglo-Primary_Colour_9a537501-2f68-42b4-aa3f-f66e7e3fd2af.avif" },
+  { name: "Soulflower", logo: SoulflowerLogo },
 ];
 
 export default function TrustedBy() {
@@ -67,7 +69,7 @@ export default function TrustedBy() {
                 <img
                   src={typeof brand.logo === 'string' ? brand.logo : brand.logo.src}
                   alt={`${brand.name} logo`}
-                  className="h-8 md:h-12 w-auto object-contain"
+                  className={`h-8 md:h-12 w-auto object-contain ${brand.name === 'Soulflower' ? 'scale-[2.5]' : ''}`}
                 />
               </div>
             ))}

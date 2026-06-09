@@ -16,7 +16,19 @@ export default function Hero() {
     challenge: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [errors, setErrors] = useState({ workEmail: "", phone: "" });
+  const [errors, setErrors] = useState({ workEmail: "", phone: "", brandWebsite: "" });
+
+  const handleWebsiteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setFormData(p => ({...p, brandWebsite: val}));
+    setGlobalError("");
+    // Basic URL validation pattern
+    if (val && !/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i.test(val)) {
+      setErrors(p => ({...p, brandWebsite: "Please enter a valid URL (e.g. https://brand.com)"}));
+    } else {
+      setErrors(p => ({...p, brandWebsite: ""}));
+    }
+  };
   const [globalError, setGlobalError] = useState("");
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,15 +61,16 @@ export default function Hero() {
     if (!formData.fullName || !formData.brandWebsite || !formData.workEmail || !formData.phone || !formData.revenue || !formData.adSpend || !formData.challenge) {
       setGlobalError("Please fill all the fields before submitting.");
       
-      // Also trigger specific errors if email/phone are empty
+      // Also trigger specific errors if fields are empty
       setErrors({
         workEmail: !formData.workEmail ? "Email is required" : errors.workEmail,
-        phone: !formData.phone ? "Phone number is required" : errors.phone
+        phone: !formData.phone ? "Phone number is required" : errors.phone,
+        brandWebsite: !formData.brandWebsite ? "Brand website is required" : errors.brandWebsite
       });
       return;
     }
 
-    if (errors.workEmail || errors.phone) return;
+    if (errors.workEmail || errors.phone || errors.brandWebsite) return;
     
     setStatus("loading");
     
@@ -142,29 +155,30 @@ export default function Hero() {
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-8">
                 <div className="flex flex-col justify-end">
-                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Full name <span className="text-orange-500">*</span></label>
+                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Full Name <span className="text-orange-500">*</span></label>
                   <input value={formData.fullName} onChange={(e) => { setFormData(p => ({...p, fullName: e.target.value})); setGlobalError(""); }} type="text" placeholder="e.g. John Doe" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-colors text-sm placeholder:text-gray-400" />
                 </div>
                 
-                <div className="flex flex-col justify-end">
-                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Brand website <span className="text-orange-500">*</span></label>
-                  <input value={formData.brandWebsite} onChange={(e) => { setFormData(p => ({...p, brandWebsite: e.target.value})); setGlobalError(""); }} type="url" placeholder="e.g. https://yourbrand.com" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-colors text-sm placeholder:text-gray-400" />
-                </div>
-                
                 <div className="flex flex-col justify-end relative">
-                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Work email <span className="text-orange-500">*</span></label>
+                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Mobile <span className="text-orange-500">*</span></label>
+                  <input value={formData.phone} onChange={handlePhoneChange} type="text" placeholder="e.g. +91 98765 43210" className={`w-full px-4 py-3 rounded-xl border ${errors.phone ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-200 focus:ring-orange-500/20 focus:border-orange-500'} transition-colors text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2`} />
+                  {errors.phone && <span className="absolute -bottom-5 left-1 text-red-500 text-[11px] whitespace-nowrap">{errors.phone}</span>}
+                </div>
+
+                <div className="flex flex-col justify-end relative">
+                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Work Email <span className="text-orange-500">*</span></label>
                   <input value={formData.workEmail} onChange={handleEmailChange} type="text" placeholder="e.g. founder@brand.com" className={`w-full px-4 py-3 rounded-xl border ${errors.workEmail ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-200 focus:ring-orange-500/20 focus:border-orange-500'} transition-colors text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2`} />
                   {errors.workEmail && <span className="absolute -bottom-5 left-1 text-red-500 text-[11px] whitespace-nowrap">{errors.workEmail}</span>}
                 </div>
                 
                 <div className="flex flex-col justify-end relative">
-                  <label className="block text-[13px] font-bold text-gray-900 mb-2">WhatsApp / phone <span className="text-orange-500">*</span></label>
-                  <input value={formData.phone} onChange={handlePhoneChange} type="text" placeholder="e.g. +91 98765 43210" className={`w-full px-4 py-3 rounded-xl border ${errors.phone ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-200 focus:ring-orange-500/20 focus:border-orange-500'} transition-colors text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2`} />
-                  {errors.phone && <span className="absolute -bottom-5 left-1 text-red-500 text-[11px] whitespace-nowrap">{errors.phone}</span>}
+                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Brand Website <span className="text-orange-500">*</span></label>
+                  <input value={formData.brandWebsite} onChange={handleWebsiteChange} type="url" placeholder="e.g. https://yourbrand.com" className={`w-full px-4 py-3 rounded-xl border ${errors.brandWebsite ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-200 focus:ring-orange-500/20 focus:border-orange-500'} transition-colors text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2`} />
+                  {errors.brandWebsite && <span className="absolute -bottom-5 left-1 text-red-500 text-[11px] whitespace-nowrap">{errors.brandWebsite}</span>}
                 </div>
                 
                 <div className="flex flex-col justify-end">
-                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Current monthly revenue <span className="text-orange-500">*</span></label>
+                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Current Monthly Revenue <span className="text-orange-500">*</span></label>
                   <CustomSelect 
                     placeholder="Select revenue range" 
                     value={formData.revenue}
@@ -180,7 +194,7 @@ export default function Hero() {
                 </div>
                 
                 <div className="flex flex-col justify-end">
-                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Current monthly ad spend (Meta + Google) <span className="text-orange-500">*</span></label>
+                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Current Monthly Ad Spend <span className="text-orange-500">*</span></label>
                   <CustomSelect 
                     placeholder="Select ad spend range" 
                     value={formData.adSpend}
@@ -197,7 +211,7 @@ export default function Hero() {
                 </div>
                 
                 <div className="flex flex-col justify-end md:col-span-2">
-                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Biggest growth challenge right now <span className="text-orange-500">*</span></label>
+                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Biggest Growth Challenge right now <span className="text-orange-500">*</span></label>
                   <CustomSelect 
                     placeholder="Select biggest challenge" 
                     value={formData.challenge}
