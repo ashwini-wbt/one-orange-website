@@ -105,10 +105,10 @@ const ServiceCard = ({ title, icon: Icon, desc }: { title: string; icon: any; de
 
 export default function Services() {
   return (
-    <section className="py-16 md:py-32 bg-white">
+    <section className="py-8 md:py-12 bg-white">
       <Container>
         {/* Heading */}
-        <div className="text-center mb-4 md:mb-24 max-w-[961px] mx-auto">
+        <div className="text-center mb-4 md:mb-8 max-w-[961px] mx-auto">
           <h2 className="font-body font-medium text-[32px] md:text-[56px] text-gray-900 leading-[100%] tracking-normal">
             Growth services built to lower CAC <br className="hidden md:block" />
             and drive profitable scale
@@ -116,7 +116,7 @@ export default function Services() {
         </div>
 
         {/* Wrapper */}
-        <div className="flex flex-col gap-y-3 md:gap-y-12 items-center max-w-6xl mx-auto">
+        <div className="flex flex-col gap-y-3 md:gap-y-8 items-center max-w-6xl mx-auto">
           
           {/* === ROW 1 === */}
           <div className="flex flex-row justify-center w-full gap-3 md:gap-48">

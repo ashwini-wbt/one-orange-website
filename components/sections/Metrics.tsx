@@ -103,17 +103,17 @@ export default function Metrics() {
   };
 
   return (
-    <section className="py-20 md:py-32 bg-white w-full overflow-hidden relative select-none">
+    <section className="py-8 md:py-12 bg-white w-full overflow-hidden relative select-none">
       <Container className="text-center relative z-10">
         
         {/* Heading */}
-        <h2 className="font-heading font-normal text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-12 md:mb-20 px-4">
+        <h2 className="font-heading font-normal text-3xl md:text-5xl lg:text-6xl text-gray-900 mb-8 md:mb-10 px-4">
           Our numbers speak for us
         </h2>
 
         {/* CONTAINER */}
         <div 
-          className="relative w-full h-[550px] sm:h-[650px] md:h-[750px] flex items-center justify-center cursor-grab active:cursor-grabbing outline-none"
+          className="relative w-full h-[480px] sm:h-[550px] md:h-[650px] flex items-center justify-center cursor-grab active:cursor-grabbing outline-none"
           style={{ perspective: "1000px" }}
           onMouseDown={handleDragStart}
           onMouseMove={handleDragMove}

@@ -1,7 +1,6 @@
 import Header from "@/components/layout/Header";
 import Hero from "@/components/sections/Hero";
 import BrandLogos from "@/components/sections/BrandLogos";
-import UnlockGrowth from "@/components/sections/UnlockGrowth";
 import Testimonials from "@/components/sections/Testimonials";
 import Services from "@/components/sections/Services"; 
 import Metrics from "@/components/sections/Metrics";     
@@ -15,7 +14,6 @@ export default function Home() {
       <div className="mt-20">
         <Hero />
         <BrandLogos />
-        <UnlockGrowth />
         <Testimonials />
         <Services />
         <Metrics />

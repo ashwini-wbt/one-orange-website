@@ -146,7 +146,7 @@ export default function Testimonials() {
   return (
     <section 
       ref={sectionRef} 
-      className="py-20 md:py-32 bg-white w-full overflow-hidden select-none"
+      className="py-8 md:py-12 bg-white w-full overflow-hidden select-none"
     >
       <Container>
         <div className="text-center mb-16">
@@ -158,7 +158,7 @@ export default function Testimonials() {
 
       {/* TRACK CONTAINER */}
       <div 
-        className="relative w-full h-[700px] flex items-center justify-center cursor-grab active:cursor-grabbing"
+        className="relative w-full h-[600px] flex items-center justify-center cursor-grab active:cursor-grabbing"
         onMouseLeave={handleDragEnd}
         onMouseDown={handleDragStart}
         onMouseMove={handleDragMove}
@@ -171,14 +171,14 @@ export default function Testimonials() {
         {/* Buttons */}
         <button 
           onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-          className="absolute left-2 md:left-10 z-50 w-10 h-10 md:w-16 md:h-16 bg-white shadow-xl rounded-full flex items-center justify-center hover:scale-110 transition-transform border border-gray-100 cursor-pointer"
+          className="absolute left-2 md:left-10 z-40 w-10 h-10 md:w-16 md:h-16 bg-white shadow-xl rounded-full flex items-center justify-center hover:scale-110 transition-transform border border-gray-100 cursor-pointer"
         >
           <ChevronLeft className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />
         </button>
 
         <button 
           onClick={(e) => { e.stopPropagation(); handleNext(); }}
-          className="absolute right-2 md:right-10 z-50 w-10 h-10 md:w-16 md:h-16 bg-white shadow-xl rounded-full flex items-center justify-center hover:scale-110 transition-transform border border-gray-100 cursor-pointer"
+          className="absolute right-2 md:right-10 z-40 w-10 h-10 md:w-16 md:h-16 bg-white shadow-xl rounded-full flex items-center justify-center hover:scale-110 transition-transform border border-gray-100 cursor-pointer"
         >
           <ChevronRight className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />
         </button>
