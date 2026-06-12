@@ -4,9 +4,10 @@ import { useState } from "react";
 import oneOrangeFounder from "../images/oneOrangeFounder.png";
 import CustomSelect from "../ui/CustomSelect";
 import CountUp from "../ui/CountUp";
-import { CheckCircle, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Hero() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     fullName: "",
     brandWebsite: "",
@@ -23,9 +24,9 @@ export default function Hero() {
     const val = e.target.value;
     setFormData(p => ({...p, brandWebsite: val}));
     setGlobalError("");
-    // Basic URL validation pattern
-    if (val && !/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i.test(val)) {
-      setErrors(p => ({...p, brandWebsite: "Please enter a valid URL (e.g. https://brand.com)"}));
+    // Flexible URL validation pattern (allows with or without https:// or www.)
+    if (val && !/^(https?:\/\/)?(www\.)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i.test(val)) {
+      setErrors(p => ({...p, brandWebsite: "Please enter a valid website (e.g. yourbrand.com)"}));
     } else {
       setErrors(p => ({...p, brandWebsite: ""}));
     }
@@ -83,8 +84,8 @@ export default function Hero() {
       });
       
       if (!response.ok) throw new Error("Failed to submit");
-      setStatus("success");
-      setFormData({ fullName: "", brandWebsite: "", workEmail: "", phone: "", revenue: "", adSpend: "", challenge: "" });
+      router.push("/thank-you");
+      // We don't reset status or form data here because we're navigating away
     } catch (error) {
       setStatus("error");
     }
@@ -174,7 +175,7 @@ export default function Hero() {
                 
                 <div className="flex flex-col justify-end relative">
                   <label className="block text-[13px] font-bold text-gray-900 mb-2">Brand Website <span className="text-orange-500">*</span></label>
-                  <input value={formData.brandWebsite} onChange={handleWebsiteChange} type="url" placeholder="e.g. https://yourbrand.com" className={`w-full px-4 py-3 rounded-xl border ${errors.brandWebsite ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-200 focus:ring-orange-500/20 focus:border-orange-500'} transition-colors text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2`} />
+                  <input value={formData.brandWebsite} onChange={handleWebsiteChange} type="text" placeholder="e.g. yourbrand.com" className={`w-full px-4 py-3 rounded-xl border ${errors.brandWebsite ? 'border-red-500 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-200 focus:ring-orange-500/20 focus:border-orange-500'} transition-colors text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2`} />
                   {errors.brandWebsite && <span className="absolute -bottom-5 left-1 text-red-500 text-[11px] whitespace-nowrap">{errors.brandWebsite}</span>}
                 </div>
                 
@@ -230,7 +231,7 @@ export default function Hero() {
               </div>
               
               <button disabled={status === "loading"} type="submit" className="w-full py-4 mt-2 bg-[#ff611d] hover:bg-[#ff5108] disabled:bg-[#ff611d]/50 disabled:cursor-not-allowed text-white rounded-[14px] font-semibold text-[15px] shadow-[0_4px_14px_rgba(255,97,29,0.39)] transition-all flex justify-center items-center gap-2">
-                {status === "loading" ? "Submitting..." : status === "success" ? "Application Sent ✓" : "Apply now →"}
+                {status === "loading" ? "Submitting..." : "Apply now →"}
               </button>
               
               {globalError && (
@@ -250,47 +251,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Success Modal */}
-      {status === "success" && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 animate-overlay p-4">
-          <div className="bg-white/60 backdrop-blur-2xl border border-white/50 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] rounded-[2rem] p-10 max-w-[520px] w-full relative animate-modal flex flex-col items-center text-center">
-            
-            <button 
-              onClick={() => setStatus("idle")}
-              className="absolute top-5 right-5 p-2 text-gray-500 hover:text-gray-900 bg-white/40 hover:bg-white/80 rounded-full transition-all duration-300"
-            >
-              <X size={20} />
-            </button>
-
-            {/* Logo */}
-            <div className="flex items-center gap-2 mb-8">
-              <div className="w-[28px] h-[28px] rounded-full bg-[#FF6900] shrink-0 shadow-lg shadow-orange-500/30"></div>
-              <span className="font-poppins font-semibold text-[24px] leading-none text-gray-900 tracking-tight">
-                oneorange
-              </span>
-            </div>
-
-            <div className="relative mb-6 group">
-              <div className="absolute inset-0 bg-green-400/30 rounded-full animate-ping blur-md animation-delay-200"></div>
-              <div className="relative w-16 h-16 bg-gradient-to-tr from-green-400 to-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30">
-                <CheckCircle className="w-8 h-8 text-white" />
-              </div>
-            </div>
-            
-            <h3 className="text-3xl font-serif font-bold text-gray-900 mb-3 tracking-tight">We'll get back to you!</h3>
-            <p className="text-gray-600 text-[15px] leading-relaxed mb-8">
-              Thank you for applying. Our growth team will review your brand details and we'll be in touch within 48 hours.
-            </p>
-
-            <button 
-              onClick={() => setStatus("idle")}
-              className="w-full py-3.5 bg-gradient-to-r from-[#FF6900] to-[#ff8433] hover:from-[#e55e00] hover:to-[#ff6900] text-white rounded-xl font-semibold text-[15px] shadow-lg shadow-orange-500/25 transition-all duration-300 transform hover:-translate-y-0.5"
-            >
-              Back to Home
-            </button>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
