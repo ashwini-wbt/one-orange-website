@@ -6,8 +6,42 @@ import CustomSelect from "../ui/CustomSelect";
 import CountUp from "../ui/CountUp";
 import { useRouter } from "next/navigation";
 
-export default function Hero() {
+export default function Hero({ country = "IN" }: { country?: "IN" | "US" }) {
   const router = useRouter();
+  
+  const revenueOptionsIN = [
+    { value: '2 - 10 Lac', label: '2 Lac INR - 10 Lac INR / month' },
+    { value: '10 - 30 Lac', label: '10 Lac INR - 30 Lac INR / month' },
+    { value: '30 - 80 Lac', label: '30 Lac INR - 80 Lac INR / month' },
+    { value: '80 Lac - 2 Cr', label: '80 Lac INR - 2 Cr INR / month' },
+    { value: '2 Cr +', label: '2 Cr+ INR / month' },
+  ];
+  const revenueOptionsUS = [
+    { value: 'Under 10,000 USD', label: 'Under 10,000 USD / month' },
+    { value: '10,000 USD - 25,000 USD', label: '10,000 USD - 25,000 USD / month' },
+    { value: '25,000 USD - 50,000 USD', label: '25,000 USD - 50,000 USD / month' },
+    { value: '50,000 USD - 100,000 USD', label: '50,000 USD - 100,000 USD / month' },
+    { value: '100,000+ USD', label: '100,000+ USD / month' },
+  ];
+  const revenueOptions = country === "IN" ? revenueOptionsIN : revenueOptionsUS;
+
+  const adSpendOptionsIN = [
+    { value: 'Under 1 Lac', label: 'Under 1Lac INR / month' },
+    { value: '1 - 3 Lac', label: '1 Lac INR - 3 Lac INR / month' },
+    { value: '3 - 10 Lac', label: '3 Lac INR - 10 Lac INR / month' },
+    { value: '10 - 25 Lac', label: '10 Lac INR - 25 Lac INR / month' },
+    { value: '25 - 50 Lac', label: '25 Lac INR - 50 Lac INR / month' },
+    { value: '50 Lac+', label: '50 Lac+ INR / month' },
+  ];
+  const adSpendOptionsUS = [
+    { value: 'Under 5,000 USD', label: 'Under 5,000 USD / month' },
+    { value: '5,000 USD - 15,000 USD', label: '5,000 USD - 15,000 USD / month' },
+    { value: '15,000 USD - 35,000 USD', label: '15,000 USD - 35,000 USD / month' },
+    { value: '35,000 USD - 60,000 USD', label: '35,000 USD - 60,000 USD / month' },
+    { value: '60,000 USD - 100,000 USD', label: '60,000 USD - 100,000 USD / month' },
+    { value: '100,000+ USD', label: '100,000+ USD / month' },
+  ];
+  const adSpendOptions = country === "IN" ? adSpendOptionsIN : adSpendOptionsUS;
   const [formData, setFormData] = useState({
     fullName: "",
     brandWebsite: "",
@@ -84,7 +118,15 @@ export default function Hero() {
       });
       
       if (!response.ok) throw new Error("Failed to submit");
-      router.push("/thank-you");
+      
+      const isBadLeadIndia = country === "IN" && formData.revenue === "2 - 10 Lac";
+      const isBadLeadUS = country === "US" && formData.revenue === "Under 10,000 USD";
+      
+      if (isBadLeadIndia || isBadLeadUS) {
+        router.push("/thank-you-interest");
+      } else {
+        router.push("/thank-you");
+      }
       // We don't reset status or form data here because we're navigating away
     } catch (error) {
       setStatus("error");
@@ -185,13 +227,7 @@ export default function Hero() {
                     placeholder="Select revenue range" 
                     value={formData.revenue}
                     onChange={(val) => setFormData(p => ({...p, revenue: val}))}
-                    options={[
-                      { value: 'Under 10,000 USD', label: 'Under 10,000 USD / month' },
-                      { value: '10,000 USD - 25,000 USD', label: '10,000 USD - 25,000 USD / month' },
-                      { value: '25,000 USD - 50,000 USD', label: '25,000 USD - 50,000 USD / month' },
-                      { value: '50,000 USD - 100,000 USD', label: '50,000 USD - 100,000 USD / month' },
-                      { value: '100,000+ USD', label: '100,000+ USD / month' },
-                    ]} 
+                    options={revenueOptions} 
                   />
                 </div>
                 
@@ -201,14 +237,7 @@ export default function Hero() {
                     placeholder="Select ad spend range" 
                     value={formData.adSpend}
                     onChange={(val) => setFormData(p => ({...p, adSpend: val}))}
-                    options={[
-                      { value: 'Under 5,000 USD', label: 'Under 5,000 USD / month' },
-                      { value: '5,000 USD - 15,000 USD', label: '5,000 USD - 15,000 USD / month' },
-                      { value: '15,000 USD - 35,000 USD', label: '15,000 USD - 35,000 USD / month' },
-                      { value: '35,000 USD - 60,000 USD', label: '35,000 USD - 60,000 USD / month' },
-                      { value: '60,000 USD - 100,000 USD', label: '60,000 USD - 100,000 USD / month' },
-                      { value: '100,000+ USD', label: '100,000+ USD / month' },
-                    ]} 
+                    options={adSpendOptions} 
                   />
                 </div>
                 

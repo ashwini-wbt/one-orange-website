@@ -4,20 +4,20 @@ import BrandLogos from "@/components/sections/BrandLogos";
 import Testimonials from "@/components/sections/Testimonials";
 import Services from "@/components/sections/Services"; 
 import Metrics from "@/components/sections/Metrics";     
-import TrustedBy from "@/components/sections/TrustedBy"; // IMPORT THIS
+import TrustedBy from "@/components/sections/TrustedBy";
 
-export default function Home() {
+export default function HomeUS() {
   return (
     <main className="min-h-screen flex flex-col w-full overflow-x-hidden bg-white">
       <Header />
       
       <div className="mt-20">
-        <Hero country="IN" />
+        <Hero country="US" />
         <BrandLogos />
         <Testimonials />
         <Services />
         <Metrics />
-        <TrustedBy /> {/* Added Here */}
+        <TrustedBy />
       </div>
       
       <footer className="py-12 border-t border-gray-100 mt-auto bg-white">
