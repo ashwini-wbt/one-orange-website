@@ -9,22 +9,6 @@ import { useRouter } from "next/navigation";
 export default function Hero({ country = "IN" }: { country?: "IN" | "US" }) {
   const router = useRouter();
   
-  const revenueOptionsIN = [
-    { value: '2 - 10 Lac', label: '2 Lac INR - 10 Lac INR / month' },
-    { value: '10 - 30 Lac', label: '10 Lac INR - 30 Lac INR / month' },
-    { value: '30 - 80 Lac', label: '30 Lac INR - 80 Lac INR / month' },
-    { value: '80 Lac - 2 Cr', label: '80 Lac INR - 2 Cr INR / month' },
-    { value: '2 Cr +', label: '2 Cr+ INR / month' },
-  ];
-  const revenueOptionsUS = [
-    { value: 'Under 10,000 USD', label: 'Under 10,000 USD / month' },
-    { value: '10,000 USD - 25,000 USD', label: '10,000 USD - 25,000 USD / month' },
-    { value: '25,000 USD - 50,000 USD', label: '25,000 USD - 50,000 USD / month' },
-    { value: '50,000 USD - 100,000 USD', label: '50,000 USD - 100,000 USD / month' },
-    { value: '100,000+ USD', label: '100,000+ USD / month' },
-  ];
-  const revenueOptions = country === "IN" ? revenueOptionsIN : revenueOptionsUS;
-
   const adSpendOptionsIN = [
     { value: 'Under 1 Lac', label: 'Under 1Lac INR / month' },
     { value: '1 - 3 Lac', label: '1 Lac INR - 3 Lac INR / month' },
@@ -47,7 +31,6 @@ export default function Hero({ country = "IN" }: { country?: "IN" | "US" }) {
     brandWebsite: "",
     workEmail: "",
     phone: "",
-    revenue: "",
     adSpend: "",
     challenge: "",
   });
@@ -94,7 +77,7 @@ export default function Hero({ country = "IN" }: { country?: "IN" | "US" }) {
     setGlobalError("");
     
     // Validate empty fields
-    if (!formData.fullName || !formData.brandWebsite || !formData.workEmail || !formData.phone || !formData.revenue || !formData.adSpend || !formData.challenge) {
+    if (!formData.fullName || !formData.brandWebsite || !formData.workEmail || !formData.phone || !formData.adSpend || !formData.challenge) {
       setGlobalError("Please fill all the fields before submitting.");
       
       // Also trigger specific errors if fields are empty
@@ -119,16 +102,9 @@ export default function Hero({ country = "IN" }: { country?: "IN" | "US" }) {
       
       if (!response.ok) throw new Error("Failed to submit");
       
-      const isBadLeadIndia = country === "IN" && formData.revenue === "2 - 10 Lac";
-      const isBadLeadUS = country === "US" && formData.revenue === "Under 10,000 USD";
-      
-      if (isBadLeadIndia || isBadLeadUS) {
-        router.push("/thank-you-interest");
-      } else {
-        router.push("/thank-you");
-      }
+      router.push("/thank-you");
       // We don't reset status or form data here because we're navigating away
-    } catch (error) {
+    } catch {
       setStatus("error");
     }
   };
@@ -222,16 +198,6 @@ export default function Hero({ country = "IN" }: { country?: "IN" | "US" }) {
                 </div>
                 
                 <div className="flex flex-col justify-end">
-                  <label className="block text-[13px] font-bold text-gray-900 mb-2">Current Monthly Revenue <span className="text-orange-500">*</span></label>
-                  <CustomSelect 
-                    placeholder="Select revenue range" 
-                    value={formData.revenue}
-                    onChange={(val) => setFormData(p => ({...p, revenue: val}))}
-                    options={revenueOptions} 
-                  />
-                </div>
-                
-                <div className="flex flex-col justify-end">
                   <label className="block text-[13px] font-bold text-gray-900 mb-2">Current Monthly Ad Spend <span className="text-orange-500">*</span></label>
                   <CustomSelect 
                     placeholder="Select ad spend range" 
@@ -241,7 +207,7 @@ export default function Hero({ country = "IN" }: { country?: "IN" | "US" }) {
                   />
                 </div>
                 
-                <div className="flex flex-col justify-end md:col-span-2">
+                <div className="flex flex-col justify-end">
                   <label className="block text-[13px] font-bold text-gray-900 mb-2">Biggest Growth Challenge right now <span className="text-orange-500">*</span></label>
                   <CustomSelect 
                     placeholder="Select biggest challenge" 
