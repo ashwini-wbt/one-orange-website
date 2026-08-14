@@ -60,6 +60,8 @@ export default function RootLayout({
             })(window,document,'script','dataLayer','GTM-T68SGLJV');
           `
         }} />
+
+        <script src="https://easyfunnel.co/chat.js" data-api-key="ef_60dc11f98ac8f704455bb841e8a600f09d1a380d9997e057"></script>
       </body>
     </html>
   );
