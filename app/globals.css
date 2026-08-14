@@ -69,3 +69,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Keep the EasyFunnel launcher aligned with the right edge of its chat panel. */
+#ef-chat-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
