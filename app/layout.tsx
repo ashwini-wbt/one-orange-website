@@ -61,7 +61,7 @@ export default function RootLayout({
           `
         }} />
 
-        <script src="https://easyfunnel.co/chat.js" data-api-key="ef_60dc11f98ac8f704455bb841e8a600f09d1a380d9997e057"></script>
+        <script src="https://easyfunnel.co/chat.js" data-api-key="ef_be94c4810ee168efc8682492fa600de3aee4fbeb94c1fe3b"></script>
       </body>
     </html>
   );
